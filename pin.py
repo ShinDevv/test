@@ -64,7 +64,7 @@ for i in range(9999):
             break
 
         elif 'Too many requests made' in r.text:
-            print('Rate limited, trying again in 60 seconds..')
+            print('Rate limit exceeded. You have made too many requests. Please wait before trying again.')
             time.sleep(60)
 
         elif 'Authorization' in r.text:
