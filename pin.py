@@ -82,4 +82,4 @@ for current_pin in range(current_pin, 10000):
 
 end_time = time.time()
 print(f"Cracking process completed in {end_time - start_time:.2f} seconds.")
-print("\u001B[32m[CRACKER FINISHED]\u
+print("\u001B[32m[CRACKER FINISHED]")
